@@ -10,7 +10,7 @@ source ./envsetup.sh(optional)
 cd build
 cmake..
 
-make
+make -jx
 
 ## Author
 * Wenxing Zhang zwxdlut@163.com
