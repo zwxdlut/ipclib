@@ -6,8 +6,10 @@ You can modify envsetup.sh to set your own build environment: compile tool chain
 ## Build steps
 cd ipclib
 source ./envsetup.sh(optional)
+
 cd build
 cmake..
+
 make
 
 ## Author
