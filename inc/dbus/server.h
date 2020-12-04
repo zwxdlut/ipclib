@@ -41,7 +41,7 @@ namespace ipc
         
             dbus_.free(msg);
 
-            LOGI(TAG, "path = %s, iface = %s, method = %s %s", _path.c_str(), _iface.c_str(), _member.c_str(), 0 == ret ? "successful" : "failed!");
+            LOGI(TAG, "path = %s, iface = %s, method = %s %s", _path.c_str(), _iface.c_str(), _member.c_str(), 0 == ret ? "successful!" : "failed!");
 
             return ret;
         }

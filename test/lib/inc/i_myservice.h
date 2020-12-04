@@ -24,13 +24,13 @@ public:
     {
     }
 
-    virtual int func1(const int32_t _i32, const bool _b, const data_a &_a, std::vector<data_a> &_as) = 0;
+    virtual void func1(const int32_t _i32, const bool _b, const data_a &_a, std::vector<data_a> &_as) = 0;
 
-    virtual int func2(const double _f64) = 0;
+    virtual void func2(const double _f64) = 0;
 
-    virtual int func3(uint8_t &_i8) = 0;
+    virtual void func3(uint8_t &_i8) = 0;
 
-    virtual int func4() = 0;
+    virtual void func4() = 0;
 
     virtual void add_callback(const i_callback *_callback)
     {

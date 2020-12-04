@@ -49,7 +49,7 @@ namespace ipc
             dbus_.free(msg);
 
             LOGI(TAG, "path = %s, iface = %s, method = %s(%s) %s", _path.c_str(), _iface.c_str(), _member.c_str(), 
-                (_has_out ? "with replay" : "without replay"), 0 == ret ? "successful" : "failed!");
+                (_has_out ? "with replay" : "without replay"), 0 == ret ? "successful!" : "failed!");
 
             return ret;
         }

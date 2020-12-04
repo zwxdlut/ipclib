@@ -10,22 +10,22 @@ myservice_stub::myservice_stub()
 
     ipc_.connect(MYSERVICE_CONNECTION);
       
-    ipc_.bind(MYSERVICE_OBJECT_PATH, MYSERVICE_INFACE, "func1", 
+    ipc_.bind(MYSERVICE_OBJECT_PATH, MYSERVICE_INTERFACE, "func1", 
         [this](const int32_t &_i32, const bool &_b, const data_a &_a, std::vector<data_a> &_as)
         {
             service_->func1(_i32, _b, _a, _as);
         });
-    ipc_.bind(MYSERVICE_OBJECT_PATH, MYSERVICE_INFACE, "func2", 
+    ipc_.bind(MYSERVICE_OBJECT_PATH, MYSERVICE_INTERFACE, "func2", 
         [this](const double &_f64)
         {
             service_->func2(_f64);
         });
-    ipc_.bind(MYSERVICE_OBJECT_PATH, MYSERVICE_INFACE, "func3", 
+    ipc_.bind(MYSERVICE_OBJECT_PATH, MYSERVICE_INTERFACE, "func3", 
         [this](uint8_t &_i8)
         {
             service_->func3(_i8);
         });
-    ipc_.bind(MYSERVICE_OBJECT_PATH, MYSERVICE_INFACE, "func4", 
+    ipc_.bind(MYSERVICE_OBJECT_PATH, MYSERVICE_INTERFACE, "func4", 
         [this](void)
         {
             service_->func4();
@@ -41,7 +41,7 @@ myservice_stub::~myservice_stub()
 
 void myservice_stub::on_info(const std::string &_info)
 {
-    ipc_.invoke(MYSERVICE_OBJECT_PATH, MYSERVICE_INFACE, __FUNCTION__, _info);
+    ipc_.invoke(MYSERVICE_OBJECT_PATH, MYSERVICE_INTERFACE, __FUNCTION__, _info);
 }
 
 

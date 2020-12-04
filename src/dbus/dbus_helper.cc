@@ -20,10 +20,10 @@ namespace ipc
 
 		DBusError err;
 
-		// Initialize the errors
+		// initialize the errors
 		dbus_error_init(&err);
 
-		// Connect to the system bus and check for errors
+		// connect to the system bus and check for errors
 		conn_ = dbus_bus_get(DBUS_BUS_SESSION, &err);
 		if (dbus_error_is_set(&err)) 
 		{ 
@@ -36,7 +36,7 @@ namespace ipc
 		}
 
 		if(!_name.empty()){
-			// Request our connection on the bus
+			// request our connection on the bus
 			int ret = dbus_bus_request_name(conn_, _name.c_str(), DBUS_NAME_FLAG_REPLACE_EXISTING , &err);
 
 			if (dbus_error_is_set(&err)) 
@@ -212,13 +212,13 @@ namespace ipc
 
 		dbus_connection_flush(conn_);
 
-		// Free message
+		// free message
 		dbus_message_unref(_msg);
 
-		// Block until we recieve a reply
+		// block until we recieve a reply
 		dbus_pending_call_block(pending);
 
-		// Get the reply message
+		// get the reply message
 		_msg = dbus_pending_call_steal_reply(pending);
 		
 		if (nullptr == _msg) 
@@ -227,7 +227,7 @@ namespace ipc
 			return -1; 
 		}
 
-		// Free the pending message handle
+		// free the pending message handle
 		dbus_pending_call_unref(pending);
 
 		LOGD(TAG, "-"); 
@@ -247,10 +247,10 @@ namespace ipc
 		
 		DBusError err;
 		
-		// Initialize the error
+		// initialize the error
 		dbus_error_init(&err);
 		
-		// Add a rule for which messages we want to see
+		// add a rule for which messages we want to see
 		dbus_bus_add_match(conn_, _rule.c_str(), &err);
 		dbus_connection_flush(conn_);
 
@@ -275,10 +275,10 @@ namespace ipc
 		
 		DBusError err;
 		
-		// Initialize the error
+		// initialize the error
 		dbus_error_init(&err);
 		
-		// Remove a rule from which messages we want to see
+		// remove a rule from which messages we want to see
 		dbus_bus_remove_match(conn_, _rule.c_str(), &err);
 		dbus_connection_flush(conn_);
 
@@ -322,406 +322,6 @@ namespace ipc
 		}
 		
 		return dbus_message_is_signal(_msg, _iface.c_str(), _member.c_str());
-	}
-
-	/**
-	 * Function template specialization.
-	 */
-	template <>
-	int dbus_helper::pack_args(DBusMessage *_msg)
-	{
-		if (nullptr == _msg)
-		{
-			LOGE(TAG, "message is null");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::unpack_args(DBusMessage *_msg)
-	{
-		if (nullptr == _msg)
-		{
-			LOGE(TAG, "message is null");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const int8_t &_t)
-	{
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_BYTE, &_t))
-		{
-			LOGE(TAG, "append DBUS_TYPE_BYTE failed!"); 
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const uint8_t &_t)
-	{
-		return arg_in(_iter, (const int8_t &)_t);
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const int16_t &_t)
-	{
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_INT16, &_t))
-		{
-			LOGE(TAG, "append DBUS_TYPE_INT16 failed!");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const uint16_t &_t)
-	{
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_UINT16, &_t))
-		{
-			LOGE(TAG, "append DBUS_TYPE_UINT16 failed!");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const int32_t &_t)
-	{
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_INT32, &_t))
-		{
-			LOGE(TAG, "append DBUS_TYPE_INT32 failed!"); 
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const uint32_t &_t)
-	{
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_UINT32, &_t))
-		{
-			LOGE(TAG, "append DBUS_TYPE_UINT32 failed!");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const int64_t &_t)
-	{
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_INT64, &_t))
-		{
-			LOGE(TAG, "append DBUS_TYPE_INT64 failed!"); 
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const uint64_t &_t)
-	{
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_UINT64, &_t))
-		{
-			LOGE(TAG, "append DBUS_TYPE_UINT64 failed!"); 
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const double &_t)
-	{
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_DOUBLE, &_t))
-		{
-			LOGE(TAG, "append DBUS_TYPE_DOUBLE failed!"); 
-			return -1;
-		}
-		
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const bool &_t)
-	{
-		dbus_bool_t b = _t;
-
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_BOOLEAN, &b))
-		{
-			LOGE(TAG, "append DBUS_TYPE_BOOLEAN failed!"); 
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_in(DBusMessageIter &_iter, const std::string &_t)
-	{
-		char *str = (char *)_t.c_str();
-
-		if (!dbus_message_iter_append_basic(&_iter, DBUS_TYPE_STRING, &str))
-		{
-			LOGE(TAG, "append DBUS_TYPE_STRING failed!");  
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, int8_t &_t)
-	{
-		int type = dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_BYTE != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_BYTE!", type);
-			return -1;	
-		}
-
-		dbus_message_iter_get_basic(&_iter, &_t);
-		LOGD(TAG, "argument type = %d, value = %d", type, _t);
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}		
-		
-		return 0;	
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, uint8_t &_t)
-	{
-		return arg_out(_iter, (int8_t &)_t);
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, int16_t &_t)
-	{
-		int type = dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_INT16 != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_INT16!", type);
-			return -1;	
-		}
-
-		dbus_message_iter_get_basic(&_iter, &_t);
-		LOGD(TAG, "argument type = %d, value = %d", type, _t);
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}		
-		
-		return 0;	
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, uint16_t &_t)
-	{
-		int type = dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_UINT16 != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_UINT16!", type);
-			return -1;	
-		}
-
-		dbus_message_iter_get_basic(&_iter, &_t);
-		LOGD(TAG, "argument type = %d, value = %d", type, _t);
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, int32_t &_t)
-	{
-		int type = dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_INT32 != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_INT32!", type);
-			return -1;	
-		}
-
-		dbus_message_iter_get_basic(&_iter, &_t);
-		LOGD(TAG, "argument type = %d, value = %d", type, _t);
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, uint32_t &_t)
-	{
-		int type = dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_UINT32 != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_UINT32!", type);
-			return -1;	
-		}
-
-		dbus_message_iter_get_basic(&_iter, &_t);
-		LOGD(TAG, "argument type = %d, value = %d", type, _t);
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, int64_t &_t)
-	{
-		int type = dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_INT64 != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_INT64!", type);
-			return -1;	
-		}
-
-		dbus_message_iter_get_basic(&_iter, &_t);
-		LOGD(TAG, "argument type = %d, value = %" PRId64"", type, _t);
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, uint64_t &_t)
-	{
-		int type =dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_UINT64 != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_UINT64!", type);
-			return -1;	
-		}
-
-		dbus_message_iter_get_basic(&_iter, &_t);
-		LOGD(TAG, "argument type = %d, value = %" PRIu64"", type, _t);
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, double &_t)
-	{
-		int type = dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_DOUBLE != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_DOUBLE!", type);
-			return -1;	
-
-		}
-
-		dbus_message_iter_get_basic(&_iter, &_t);
-		LOGD(TAG, "argument type = %d, value = %lf", type, _t);
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}
-
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, bool &_t)
-	{
-		int type = dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_BOOLEAN != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_BOOLEAN!", type);
-			return -1;
-		}
-
-		dbus_bool_t t = _t;
-
-		dbus_message_iter_get_basic(&_iter, &t);
-		_t = t;
-		LOGD(TAG, "argument type = %d, value = %d", type, _t);
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}
-			
-		return 0;
-	}
-
-	template <>
-	int dbus_helper::arg_out(DBusMessageIter &_iter, std::string &_t)
-	{
-		int type = dbus_message_iter_get_arg_type(&_iter);
-
-		if(DBUS_TYPE_STRING != type)
-		{
-			LOGE(TAG, "argument type %d is not DBUS_TYPE_STRING!", type);
-			return -1;	
-		}
-
-		char *str = nullptr;
-
-		dbus_message_iter_get_basic(&_iter, &str);
-		_t = std::string(str);
-		LOGD(TAG, "argument type = %d, value = %s", type, _t.c_str());
-
-		if(!dbus_message_iter_next(&_iter))
-		{
-			LOGD(TAG, "iterator reach the end!");
-			return -1;
-		}
-			
-		return 0;
 	}	
 } // namespace ipc
 

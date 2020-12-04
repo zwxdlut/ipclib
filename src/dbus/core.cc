@@ -113,7 +113,8 @@ namespace ipc
 
         LOGI(TAG, "-");
     }
-
+    
+    // TODO: CRTP
     // RTTI
     template <typename... ARGS>
     int core::invoke(const std::string &_path, const std::string &_iface, const std::string &_member, ARGS&... _args)
