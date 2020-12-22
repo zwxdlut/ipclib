@@ -5,7 +5,7 @@
 
 #define TAG "myclient"
 
-class myservice_callback: public i_myservice::i_callback
+class myservice_callback: public imyservice::icallback
 {
 public:
     void on_info(const std::string &info)

@@ -2,7 +2,7 @@
 #include "myservice.h"
 #include "myservice_proxy.h"
 
-std::unique_ptr<i_myservice> myservice_factory::create(interface_type _type)
+std::unique_ptr<imyservice> myservice_factory::create(interface_type _type)
 {
     if (LOCAL == _type)
     {

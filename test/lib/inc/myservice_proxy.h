@@ -1,10 +1,10 @@
 #ifndef __MYSERVICE_PROXY_H__
 #define __MYSERVICE_PROXY_H__
 
-#include "i_myservice.h"
+#include "imyservice.h"
 #include "client.h"
 
-class myservice_proxy : public i_myservice
+class myservice_proxy : public imyservice
 {
 public:
     myservice_proxy();

@@ -1,9 +1,9 @@
 #ifndef __MYSERVICE__H__
 #define __MYSERVICE__H__
 
-#include "i_myservice.h"
+#include "imyservice.h"
 
-class myservice : public i_myservice
+class myservice : public imyservice
 {
 public:
     myservice();

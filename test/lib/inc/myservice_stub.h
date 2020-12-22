@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "i_myservice.h"
+#include "imyservice.h"
 #include "server.h"
 
-class myservice_stub : public i_myservice::i_callback
+class myservice_stub : public imyservice::icallback
 {
 public:
     myservice_stub();
@@ -17,7 +17,7 @@ public:
 
 private:
     ipc::server ipc_;
-    std::unique_ptr<i_myservice> service_;
+    std::unique_ptr<imyservice> service_;
 };
 
 #endif // __MYSERVICE_STUB__H__

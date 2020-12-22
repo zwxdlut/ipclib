@@ -6,23 +6,19 @@
 
 #include "protocol.h"
 
-class i_myservice
+class imyservice
 {
 public:
-    class i_callback
+    class icallback
     {
     public:
         virtual void on_info(const std::string &info) = 0;
     };
 
 public:
-    i_myservice()
-    {
-    }
+    imyservice() {}
 
-    virtual ~i_myservice()
-    {
-    }
+    virtual ~imyservice() {}
 
     virtual void func1(const int32_t _i32, const bool _b, const data_a &_a, std::vector<data_a> &_as) = 0;
 
@@ -32,14 +28,14 @@ public:
 
     virtual void func4() = 0;
 
-    virtual void add_callback(const i_callback *_callback)
+    virtual void add_callback(const icallback *_callback)
     {
-        callbacks_.push_back(const_cast<i_callback *>(_callback));
+        callbacks_.push_back(const_cast<icallback *>(_callback));
     }
 
-    virtual void remove_callback(const i_callback *_callback)
+    virtual void remove_callback(const icallback *_callback)
     {
-        std::vector<i_callback *>::iterator iter = std::find(callbacks_.begin(), callbacks_.end(), _callback);
+        std::vector<icallback *>::iterator iter = std::find(callbacks_.begin(), callbacks_.end(), _callback);
 
         if (callbacks_.end() == iter)
         {
@@ -50,7 +46,7 @@ public:
     }
 
 protected:
-    std::vector<i_callback *> callbacks_;
+    std::vector<icallback *> callbacks_;
 };
 
 #endif // __I_MYSERVICE_H__

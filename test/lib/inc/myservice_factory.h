@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "i_myservice.h"
+#include "imyservice.h"
  
 class myservice_factory
 {
@@ -14,7 +14,7 @@ public:
         PROXY
     };
 
-    static std::unique_ptr<i_myservice> create(interface_type _type);
+    static std::unique_ptr<imyservice> create(interface_type _type);
 };
 
 #endif // __MYSERVICE_FACTORY__H__
