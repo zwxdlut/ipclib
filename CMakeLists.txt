@@ -9,17 +9,19 @@ message(STATUS "------Build Environment------")
 #
 # platform and ipc scheme dependencies
 #
-if("$ENV{IPC_SCHEME}" STREQUAL "rpclib")
-    add_definitions(-D _RPCLIB_)
+if("$ENV{IPC_SCHEME}" STREQUAL "rpc")
+    add_definitions(-D _RPC_)
 else()
     if("$ENV{PLATFORM}" STREQUAL "raspberry-pi")
     else()
-        include_directories($ENV{SYS_ROOT}/usr/lib/x86_64-linux-gnu/dbus-1.0/include
-                            $ENV{SYS_ROOT}/usr/include/dbus-1.0)
+        include_directories(
+            $ENV{SYS_ROOT}/usr/lib/x86_64-linux-gnu/dbus-1.0/include
+            $ENV{SYS_ROOT}/usr/include/dbus-1.0)
     endif()
-    
+
     add_definitions(-D _DBUS_)
-    aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src/dbus DIR_SRCS)
+    include_directories(inc/dbus)
+    aux_source_directory(src/dbus SRCS)
     set(LINK dbus-1)
 endif()
 
@@ -29,10 +31,10 @@ endif()
 add_compile_options(-Wall -O0 -g -std=c++14 -rdynamic)
 add_definitions(-D _DEBUG)
 include_directories(inc)
-aux_source_directory(src DIR_SRCS)
-add_library(${PROJECT_NAME} STATIC ${DIR_SRCS})
+aux_source_directory(src SRCS)
+add_library(${PROJECT_NAME} STATIC ${SRCS})
 target_link_libraries(${PROJECT_NAME} pthread ${LINK})
 
-# demo
-add_subdirectory(test)
+# example
+add_subdirectory(example)
 

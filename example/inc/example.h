@@ -1,14 +1,14 @@
-#ifndef __MYSERVICE__H__
-#define __MYSERVICE__H__
+#ifndef __EXAMPLE__H__
+#define __EXAMPLE__H__
 
-#include "imyservice.h"
+#include "iexample.h"
 
-class myservice : public imyservice
+class example : public iexample
 {
 public:
-    myservice();
+    example();
 
-    ~myservice();
+    ~example();
 
     void func1(const int32_t _i32, const bool _b, const data_a &_a, std::vector<data_a> &_as);
 
@@ -19,7 +19,7 @@ public:
     void func4();
 
 private:
-    const char *TAG = "myservice";
+    const char *TAG = "example";
 };
 
-#endif // __MYSERVICE__H__
+#endif // __EXAMPLE__H__

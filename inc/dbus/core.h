@@ -70,8 +70,9 @@ namespace ipc
         {
             add_match(_path, _iface, _member);
 
-            key_t key{_path, _iface, _member};
-            
+            key_t key { _path, _iface, _member };
+            std::lock_guard<std::mutex> lock(binds_mutex_);
+
             binds_.insert(std::make_pair(key, [this, _func, key](const dbus_message &_msg)
             { 
                 receives(key, _func, _msg); 
@@ -107,7 +108,7 @@ namespace ipc
             {
                 LOGI(TAG, "path = %s, iface = %s, member = %s", _key.path_.c_str(), _key.iface_.c_str(), _key.member_.c_str());
 
-                using args_type = typename detail::func_traits<FUNC>::args_type;
+                using args_type = typename ipc::func_traits<FUNC>::args_type;
                 args_type args;
 
                 return receive(_key, _func, _msg, args, std::make_index_sequence<std::tuple_size<args_type>::value>{});
@@ -134,7 +135,7 @@ namespace ipc
                 {
                     int ret = 0;
 
-                    if (detail::args_check<typename detail::func_traits<FUNC>::args_oringinal_type>::has_out_)
+                    if (ipc::args_check<typename ipc::func_traits<FUNC>::args_oringinal_type>::has_out_)
                     {
                         dbus_message reply_msg = dbus_.create_reply(_msg);
 
@@ -162,15 +163,16 @@ namespace ipc
 
     protected: 
         const char                     *TAG = "ipc::core";
-        dbus_helper                    dbus_;
-        std::string                    conn_;
         bool                           done_;
-        bool                           thread_listen_exit_;
-        std::thread                    *thread_listen_;
-        std::mutex                     mutex_listen_;
-        std::condition_variable        cond_listen_;
-        std::mutex                     mutex_send_;
+        bool                           listen_thread_exit_;
+        std::string                    conn_;
+        dbus_helper                    dbus_;
         std::map<key_t, bind_function> binds_;
+        std::thread                    *listen_thread_;
+        std::mutex                     listen_mutex_;
+        std::condition_variable        listen_cond_;
+        std::mutex                     send_mutex_;
+        std::mutex                     binds_mutex_;
     };
 } // namespace ipc
 

@@ -22,9 +22,9 @@ namespace ipc
 
 		// initialize the errors
 		dbus_error_init(&err);
-
 		// connect to the system bus and check for errors
 		conn_ = dbus_bus_get(DBUS_BUS_SESSION, &err);
+
 		if (dbus_error_is_set(&err)) 
 		{ 
 			LOGE(TAG, "connection error(%s)!", err.message);
@@ -196,8 +196,7 @@ namespace ipc
 
 		DBusPendingCall *pending = nullptr;
 
-		/* Send message and get a handle for a reply, 
-		-1 is default timeout */
+		// Send message and get a handle for a reply, -1 is default timeout
 		if (!dbus_connection_send_with_reply(conn_, _msg, &pending, -1))
 		{ 
 			LOGE(TAG, "out of memory!");  
@@ -211,13 +210,10 @@ namespace ipc
 		}
 
 		dbus_connection_flush(conn_);
-
 		// free message
 		dbus_message_unref(_msg);
-
 		// block until we recieve a reply
 		dbus_pending_call_block(pending);
-
 		// get the reply message
 		_msg = dbus_pending_call_steal_reply(pending);
 		
@@ -249,7 +245,6 @@ namespace ipc
 		
 		// initialize the error
 		dbus_error_init(&err);
-		
 		// add a rule for which messages we want to see
 		dbus_bus_add_match(conn_, _rule.c_str(), &err);
 		dbus_connection_flush(conn_);
@@ -277,7 +272,6 @@ namespace ipc
 		
 		// initialize the error
 		dbus_error_init(&err);
-		
 		// remove a rule from which messages we want to see
 		dbus_bus_remove_match(conn_, _rule.c_str(), &err);
 		dbus_connection_flush(conn_);

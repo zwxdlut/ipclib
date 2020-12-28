@@ -1,16 +1,16 @@
 #include <chrono>
 #include <thread>
 
-#include "myservice_factory.h"
+#include "example_factory.h"
 
-#define TAG "myclient"
+#define TAG "example_client"
 
-class myservice_callback: public imyservice::icallback
+class example_callback: public iexample::icallback
 {
 public:
     void on_info(const std::string &info)
     {
-        LOGI("myservice_callback", "%s", info.c_str());
+        LOGI("example_callback", "%s", info.c_str());
     }
 };
 
@@ -22,25 +22,25 @@ int main(int argc, char** argv)
     std::vector<data_a> va;
     double f64 = 100.1;
     uint8_t i8 = 0;
-    auto service = myservice_factory::create(myservice_factory::interface_type::PROXY);
-    myservice_callback callback;
+    auto example = example_factory::create(example_factory::interface_type::PROXY);
+    example_callback callback;
     
-    service->add_callback(&callback);
+    example->add_callback(&callback);
 
     LOGI(TAG, "func1 +: %d, %d, %s, %s", i32, b, formater::format(a)->c_str(), formater::format(va)->c_str());
-    service->func1(i32, b, a, va);
+    example->func1(i32, b, a, va);
     LOGI(TAG, "func1 -: %d, %d, %s, %s", i32, b, formater::format(a)->c_str(), formater::format(va)->c_str());
 
     LOGI(TAG, "func2 +: %lf", f64);
-    service->func2(f64);
+    example->func2(f64);
     LOGI(TAG, "func2 -: %lf", f64);
 
     LOGI(TAG, "func3 +: %d", i8);
-    service->func3(i8);
+    example->func3(i8);
     LOGI(TAG, "func3 -: %d", i8);
 
     LOGI(TAG, "func4 +");
-    service->func4();
+    example->func4();
     LOGI(TAG, "func4 -");
 
     while(1)

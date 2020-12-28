@@ -1,16 +1,16 @@
 #include <sstream>
 
-#include "myservice.h"
+#include "example.h"
 
-myservice::myservice()
+example::example()
 {
 }
 
-myservice::~myservice()
+example::~example()
 { 
 }
 
-void myservice::func1(const int32_t _i32, const bool _b, const data_a &_a, std::vector<data_a> &_as)
+void example::func1(const int32_t _i32, const bool _b, const data_a &_a, std::vector<data_a> &_as)
 { 
     LOGI(TAG, "%d, %d, %s, %s", _i32, _b, formater::format(_a)->c_str(), formater::format(_as)->c_str());
     
@@ -20,12 +20,12 @@ void myservice::func1(const int32_t _i32, const bool _b, const data_a &_a, std::
     {
         if (nullptr != i)
         {
-            i->on_info(std::string("myservice::func1 is returned"));
+            i->on_info(std::string("example::func1 is returned"));
         }
     }
 }
 
-void myservice::func2(const double _f64)
+void example::func2(const double _f64)
 {
     LOGI(TAG, "%lf", _f64);
 
@@ -33,12 +33,12 @@ void myservice::func2(const double _f64)
     {
         if (nullptr != i)
         {
-            i->on_info(std::string("myservice::func2 is returned"));
+            i->on_info(std::string("example::func2 is returned"));
         }
     }
 }
 
-void myservice::func3(uint8_t &_i8)
+void example::func3(uint8_t &_i8)
 {
     LOGI(TAG, "%d", _i8);
 
@@ -48,12 +48,12 @@ void myservice::func3(uint8_t &_i8)
     {
         if (nullptr != i)
         {
-            i->on_info(std::string("myservice::func3 is returned"));
+            i->on_info(std::string("example::func3 is returned"));
         }
     }
 }
 
-void myservice::func4()
+void example::func4()
 {
     LOGI(TAG, "");
 
@@ -61,7 +61,7 @@ void myservice::func4()
     {
         if (nullptr != i)
         {
-            i->on_info(std::string("myservice::func4 is returned"));
+            i->on_info(std::string("example::func4 is returned"));
         }
     }
 }

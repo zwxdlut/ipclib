@@ -10,7 +10,7 @@ function setup_env()
     echo 
     echo 0:dbus
     echo 
-    echo 1:rpclib
+    echo 1:rpc
     echo 
     
     until [ "$IPC_SCHEME_NO" = "0" ] || 
@@ -25,7 +25,7 @@ function setup_env()
         export IPC_SCHEME="dbus"
         ;;
     1)
-        export IPC_SCHEME="rpclib"
+        export IPC_SCHEME="rpc"
         ;; 
     esac
 

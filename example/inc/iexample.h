@@ -1,12 +1,12 @@
-#ifndef __I_MYSERVICE_H__
-#define __I_MYSERVICE_H__
+#ifndef __IEXAMPLE_H__
+#define __IEXAMPLE_H__
 
 #include <algorithm>
 #include <vector>
 
 #include "protocol.h"
 
-class imyservice
+class iexample
 {
 public:
     class icallback
@@ -16,9 +16,9 @@ public:
     };
 
 public:
-    imyservice() {}
+    iexample() {}
 
-    virtual ~imyservice() {}
+    virtual ~iexample() {}
 
     virtual void func1(const int32_t _i32, const bool _b, const data_a &_a, std::vector<data_a> &_as) = 0;
 
@@ -49,4 +49,4 @@ protected:
     std::vector<icallback *> callbacks_;
 };
 
-#endif // __I_MYSERVICE_H__
+#endif // __IEXAMPLE_H__

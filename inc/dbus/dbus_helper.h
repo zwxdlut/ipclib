@@ -74,7 +74,7 @@ namespace ipc
 			DBusMessageIter iter;
 
 			dbus_message_iter_init_append(_msg, &iter);
-			std::initializer_list<int>{(arg_in(iter, _args), 0)...};
+			std::initializer_list<int> { (arg_in(iter, _args), 0)... };
 
 			LOGD(TAG, "-");
 

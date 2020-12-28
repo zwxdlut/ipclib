@@ -1,7 +1,7 @@
-#ifndef __FUNC_TRAITS_H__
-#define __FUNC_TRAITS_H__
+#ifndef __IPC_FUNC_TRAITS_H__
+#define __IPC_FUNC_TRAITS_H__
 
-namespace detail 
+namespace ipc 
 {
 
 	namespace tags 
@@ -121,5 +121,5 @@ namespace detail
     struct args_check<std::tuple<ARGS...>> : args_check<ARGS...> {};
 } // namespace detail
 
-#endif // __FUNC_TRAITS_H__
+#endif // __IPC_FUNC_TRAITS_H__
 

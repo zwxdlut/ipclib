@@ -1,11 +1,11 @@
 #include <chrono>
 
-#include "myservice.h"
-#include "myservice_stub.h"
+#include "example.h"
+#include "example_stub.h"
 
 int main(int argc, char** argv)
 {
-    myservice_stub stub;
+    example_stub stub;
     
     while(1)
     {

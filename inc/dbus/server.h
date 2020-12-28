@@ -30,7 +30,7 @@ namespace ipc
         {       
             int ret = 0;
             dbus_message msg = nullptr;
-            std::lock_guard<std::mutex> lock(mutex_send_);
+            std::lock_guard<std::mutex> lock(send_mutex_);
         
             if(0 == (msg = dbus_.create_signal(_path, _iface, _member))
                 || 0 != dbus_.pack_args(msg, _args...) 
@@ -40,7 +40,6 @@ namespace ipc
             }
         
             dbus_.free(msg);
-
             LOGI(TAG, "path = %s, iface = %s, method = %s %s", _path.c_str(), _iface.c_str(), _member.c_str(), 0 == ret ? "successful!" : "failed!");
 
             return ret;

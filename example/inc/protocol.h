@@ -7,16 +7,16 @@
 
 #include "core.h"
 
-#define MYSERVICE_CONNECTION "com.myservice.conn"
-#define MYSERVICE_OBJECT_PATH "/com/myservice/path"
-#define MYSERVICE_INTERFACE "com.myservice.interface"
+#define EXAMPLE_CONNECTION  "com.example.conn"
+#define EXAMPLE_OBJECT_PATH "/com/example/path"
+#define EXAMPLE_INTERFACE   "com.example.interface"
 
 #if defined _DBUS_
     struct data_b : public ipc::dbus_helper::serializable
     {
-        data_b(){}
+        data_b() {}
 
-        data_b(const uint8_t _i8, const uint32_t _i32): i8_(_i8), i32_(_i32){}
+        data_b(const uint8_t _i8, const uint32_t _i32): i8_(_i8), i32_(_i32) {}
 
         void signature(std::string &_sig)
         {
@@ -27,6 +27,7 @@
         {
             _dbus->arg_in(_iter, i8_);
             _dbus->arg_in(_iter, i32_);
+
             return 0;
         }
 
@@ -34,6 +35,7 @@
         {
             _dbus->arg_out(_iter, i8_);
             _dbus->arg_out(_iter, i32_);
+			
             return 0;
         }
 
@@ -61,6 +63,7 @@
             _dbus->arg_in(_iter, b1_);
             _dbus->arg_in(_iter, b2_);
             _dbus->arg_in(_iter, b_);
+
             return 0;
         }
 
@@ -71,6 +74,7 @@
             _dbus->arg_out(_iter, b1_);
             _dbus->arg_out(_iter, b2_);
             _dbus->arg_out(_iter, b_);
+
             return 0;
         }
 
@@ -80,14 +84,14 @@
         bool b2_;
         data_b b_;
     };
-#elif defined _RPCLIB_
+#elif defined _RPC_
 #endif
 
 class formater
 {
 public:
     template <typename T>
-    static std::unique_ptr<std::string> format(const T &_t) {return nullptr;}
+    static std::unique_ptr<std::string> format(const T &_t) { return nullptr; }
 
     template <typename T>
     static std::unique_ptr<std::string> format(const std::vector<T> &_vt)
@@ -109,9 +113,7 @@ template <>
 inline std::unique_ptr<std::string> formater::format(const data_b &_t)
 {
     std::stringstream ss;
-
     ss << "{" << _t.i8_ << ", " << _t.i32_ << "}";
-
     return std::make_unique<std::string>(ss.str());
 }
 

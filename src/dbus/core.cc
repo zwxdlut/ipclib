@@ -7,7 +7,7 @@ namespace ipc
     core::core()
     {
         done_ = true;
-        thread_listen_exit_ = true;
+        listen_thread_exit_ = true;
     }
 
     core::~core()
@@ -25,12 +25,12 @@ namespace ipc
         stop();
         binds_.clear();
         conn_.clear();
-
         return dbus_.disconnect();
     }
 
     void core::unbind(const std::string &_path, const std::string &_iface, const std::string &_method)
     {
+        std::lock_guard<std::mutex> lock(binds_mutex_);
         binds_.erase(key_t{_path, _iface, _method});
     }
 
@@ -44,8 +44,8 @@ namespace ipc
         }
         else
         {
-            thread_listen_exit_ = false;
-            thread_listen_ = new std::thread([this](){listen();});
+            listen_thread_exit_ = false;
+            listen_thread_ = new std::thread([this](){listen();});
         }
     }
 
@@ -54,18 +54,18 @@ namespace ipc
         done_ = true;
 
         {
-            std::unique_lock<std::mutex> lock(mutex_listen_);
-            if (!thread_listen_exit_)
+            std::unique_lock<std::mutex> lock(listen_mutex_);
+            if (!listen_thread_exit_)
             {
-                cond_listen_.wait(lock);
+                listen_cond_.wait(lock);
             }
         }
 
-        if (nullptr != thread_listen_)
+        if (nullptr != listen_thread_)
         {
-            thread_listen_->join();
-            delete thread_listen_;
-            thread_listen_ = nullptr;
+            listen_thread_->join();
+            delete listen_thread_;
+            listen_thread_ = nullptr;
         }
     }
 
@@ -88,16 +88,18 @@ namespace ipc
                 // const char *member = dbus_message_get_member(msg);
                 // LOGI(TAG, "msg = %p, type = %s, sender = %s -> dest = %s, path = %s, iface = %s, member = %s", msg, type, sender, dst, path, iface, member);
 
-                key_t key{dbus_message_get_path(msg), dbus_message_get_interface(msg), dbus_message_get_member(msg)};
+                key_t key { dbus_message_get_path(msg), dbus_message_get_interface(msg), dbus_message_get_member(msg) };
 
                 LOGI(TAG, "path = %s, iface = %s, member = %s", key.path_.c_str(), key.iface_.c_str(), key.member_.c_str());
 
-                // TODO 加保护
-                auto find = binds_.find(key);
-
-                if (binds_.end() != find)
                 {
-                    find->second(msg);
+                    std::lock_guard<std::mutex> lock(binds_mutex_);
+                    auto find = binds_.find(key);
+
+                    if (binds_.end() != find)
+                    {
+                        find->second(msg);
+                    }
                 }
 
                 dbus_.free(msg);
@@ -106,10 +108,10 @@ namespace ipc
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
 
-        std::lock_guard<std::mutex> lock(mutex_listen_);
+        std::lock_guard<std::mutex> lock(listen_mutex_);
 
-        cond_listen_.notify_all();
-        thread_listen_exit_ = true;
+        listen_cond_.notify_all();
+        listen_thread_exit_ = true;
 
         LOGI(TAG, "-");
     }

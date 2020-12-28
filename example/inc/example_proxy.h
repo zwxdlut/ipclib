@@ -1,15 +1,15 @@
-#ifndef __MYSERVICE_PROXY_H__
-#define __MYSERVICE_PROXY_H__
+#ifndef __EXAMPLE_PROXY_H__
+#define __EXAMPLE_PROXY_H__
 
-#include "imyservice.h"
+#include "iexample.h"
 #include "client.h"
 
-class myservice_proxy : public imyservice
+class example_proxy : public iexample
 {
 public:
-    myservice_proxy();
+    example_proxy();
 
-    ~myservice_proxy();
+    ~example_proxy();
 
     void func1(const int32_t _i32, const bool _b, const data_a &_a, std::vector<data_a> &_as);
 
@@ -23,4 +23,4 @@ private:
     ipc::client ipc_;
 };
 
-#endif // __MYSERVICE_PROXY_H__
+#endif // __EXAMPLE_PROXY_H__

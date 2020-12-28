@@ -13,7 +13,6 @@ namespace ipc
     {
         core::connect(_conn);
         LOGI(TAG, "conn = %s", _conn.c_str());
-
         return dbus_.connect(conn_);
     }
 
