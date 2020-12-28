@@ -11,7 +11,7 @@
 #define MYSERVICE_OBJECT_PATH "/com/myservice/path"
 #define MYSERVICE_INTERFACE "com.myservice.interface"
 
-#if defined _IPC_DBUS_
+#if defined _DBUS_
     struct data_b : public ipc::dbus_helper::serializable
     {
         data_b(){}
@@ -80,7 +80,7 @@
         bool b2_;
         data_b b_;
     };
-#elif defined _IPC_SOCKET_
+#elif defined _RPCLIB_
 #endif
 
 class formater

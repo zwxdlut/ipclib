@@ -39,9 +39,9 @@ function setup_env()
     echo
     echo "ipc scheme："
     echo 
-    echo 0:DBus
+    echo 0:dbus
     echo 
-    echo 1:socket
+    echo 1:rpclib
     echo 
     
     until [ "$IPC_SCHEME" = "0" ] || 

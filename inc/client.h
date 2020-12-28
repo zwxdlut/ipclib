@@ -1,7 +1,7 @@
 #ifndef __IPC_CLIENT_H__
 #define __IPC_CLIENT_H__
 
-#if defined _IPC_DBUS_
+#if defined _DBUS_
     #include "dbus/client.h"
 #elif defined _IPC_SOCKET_
 #endif
