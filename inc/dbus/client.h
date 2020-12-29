@@ -53,8 +53,6 @@ namespace ipc
             return ret;
         }
 
-
-
         int resolve(const bool _has_out, const std::string &_path, const std::string &_iface, const std::string &_member)
         {
             return send(_has_out, _path, _iface, _member);

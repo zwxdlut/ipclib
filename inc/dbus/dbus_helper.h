@@ -12,7 +12,7 @@
 
 #include <dbus/dbus.h>
 
-#include "../log.h"
+#include "log.h"
 
 namespace ipc
 {

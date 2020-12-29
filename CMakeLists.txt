@@ -35,6 +35,6 @@ aux_source_directory(src SRCS)
 add_library(${PROJECT_NAME} STATIC ${SRCS})
 target_link_libraries(${PROJECT_NAME} pthread ${LINK})
 
-# example
+# Example
 add_subdirectory(example)
 

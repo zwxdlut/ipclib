@@ -3,7 +3,6 @@
 
 namespace ipc 
 {
-
 	namespace tags 
 	{
 		// tags for the function traits, used for tag dispatching
