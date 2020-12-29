@@ -13,7 +13,7 @@ namespace ipc
     {
         core::connect(_conn);
         LOGI(TAG, "conn = %s", _conn.c_str());
-        return dbus_.connect(conn_);
+        return dbus_.connect(_conn);
     }
 
     int server::add_match(const std::string &_path, const std::string &_iface, const std::string &_member)

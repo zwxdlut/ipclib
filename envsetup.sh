@@ -4,30 +4,30 @@
 function setup_env()
 {
     # ipc scheme
-    IPC_SCHEME_NO=-1
-    echo
-    echo "ipc scheme："
-    echo 
-    echo 0:dbus
-    echo 
-    echo 1:rpc
-    echo 
+    # IPC_SCHEME_NO=-1
+    # echo
+    # echo "ipc scheme："
+    # echo 
+    # echo 0:dbus
+    # echo 
+    # echo 1:rpc
+    # echo 
     
-    until [ "$IPC_SCHEME_NO" = "0" ] || 
-          [ "$IPC_SCHEME_NO" = "1" ]
+    # until [ "$IPC_SCHEME_NO" = "0" ] || 
+    #       [ "$IPC_SCHEME_NO" = "1" ]
           
-    do
-        read -p "please select ipc scheme：" IPC_SCHEME_NO
-    done
+    # do
+    #     read -p "please select ipc scheme：" IPC_SCHEME_NO
+    # done
 
-    case $IPC_SCHEME_NO in
-    0)
-        export IPC_SCHEME="dbus"
-        ;;
-    1)
-        export IPC_SCHEME="rpc"
-        ;; 
-    esac
+    # case $IPC_SCHEME_NO in
+    # 0)
+    #     export IPC_SCHEME="dbus"
+    #     ;;
+    # 1)
+    #     export IPC_SCHEME="rpc"
+    #     ;; 
+    # esac
 
     # platform
 	PLATFORM_NO=-1

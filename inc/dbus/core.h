@@ -14,7 +14,7 @@
 #include <type_traits>
 
 #include "dbus_helper.h"
-#include "func_traits.h"
+#include "../func_traits.h"
 
 namespace ipc
 {

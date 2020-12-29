@@ -16,12 +16,12 @@ public:
 
 int main(int argc, char** argv)
 {
+    uint8_t i8 = 0;
     int32_t i32 = 100;
+    double f64 = 100.1;
     bool b = true;
     data_a a = {200, {"AAA", "BBB"}, true, false, {65, 650}};
     std::vector<data_a> va;
-    double f64 = 100.1;
-    uint8_t i8 = 0;
     auto example = example_factory::create(example_factory::interface_type::PROXY);
     example_callback callback;
     

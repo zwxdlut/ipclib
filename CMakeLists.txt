@@ -1,39 +1,27 @@
 cmake_minimum_required(VERSION 2.8)
 project(ipc)
 
-message(STATUS "------Build Environment------")
+#
+# Platform
+#
 message(STATUS "PLATFORM = $ENV{PLATFORM}")
-message(STATUS "IPC_SCHEME = $ENV{IPC_SCHEME}")
-message(STATUS "------Build Environment------")
 
-#
-# Platform and ipc scheme
-#
-if("$ENV{IPC_SCHEME}" STREQUAL "rpc")
-    add_definitions(-D _RPC_)
+if("$ENV{PLATFORM}" STREQUAL "raspberry-pi")
 else()
-    if("$ENV{PLATFORM}" STREQUAL "raspberry-pi")
-    else()
-        include_directories(
-            $ENV{SYS_ROOT}/usr/lib/x86_64-linux-gnu/dbus-1.0/include
-            $ENV{SYS_ROOT}/usr/include/dbus-1.0)
-    endif()
-    
-    add_definitions(-D _DBUS_)
-    include_directories(inc/dbus)
-    aux_source_directory(src/dbus SRCS)
-    set(LINK dbus-1)
+    include_directories(
+        $ENV{SYS_ROOT}/usr/lib/x86_64-linux-gnu/dbus-1.0/include
+        $ENV{SYS_ROOT}/usr/include/dbus-1.0)
 endif()
 
 #
 # Ipc lib
 #
-add_definitions(-D _DEBUG)
 add_compile_options(-Wall -O0 -g -std=c++14 -rdynamic)
-include_directories(inc)
-aux_source_directory(src SRCS)
+add_definitions(-D _DEBUG)
+include_directories(inc/dbus)
+aux_source_directory(src/dbus SRCS)
 add_library(${PROJECT_NAME} STATIC ${SRCS})
-target_link_libraries(${PROJECT_NAME} pthread ${LINK})
+target_link_libraries(${PROJECT_NAME} pthread dbus-1)
 
 # Example
 add_subdirectory(example)

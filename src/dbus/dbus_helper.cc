@@ -1,6 +1,6 @@
 #include <dbus/dbus.h>
 
-#include "../../inc/dbus/dbus_helper.h"
+#include "dbus_helper.h"
 
 namespace ipc
 {
