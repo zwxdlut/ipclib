@@ -7,7 +7,7 @@ message(STATUS "IPC_SCHEME = $ENV{IPC_SCHEME}")
 message(STATUS "------Build Environment------")
 
 #
-# platform and ipc scheme dependencies
+# Platform and ipc scheme
 #
 if("$ENV{IPC_SCHEME}" STREQUAL "rpc")
     add_definitions(-D _RPC_)
@@ -18,7 +18,7 @@ else()
             $ENV{SYS_ROOT}/usr/lib/x86_64-linux-gnu/dbus-1.0/include
             $ENV{SYS_ROOT}/usr/include/dbus-1.0)
     endif()
-
+    
     add_definitions(-D _DBUS_)
     include_directories(inc/dbus)
     aux_source_directory(src/dbus SRCS)
@@ -26,10 +26,10 @@ else()
 endif()
 
 #
-# ipclib
+# Ipc lib
 #
-add_compile_options(-Wall -O0 -g -std=c++14 -rdynamic)
 add_definitions(-D _DEBUG)
+add_compile_options(-Wall -O0 -g -std=c++14 -rdynamic)
 include_directories(inc)
 aux_source_directory(src SRCS)
 add_library(${PROJECT_NAME} STATIC ${SRCS})
