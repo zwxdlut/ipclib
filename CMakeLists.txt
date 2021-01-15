@@ -18,8 +18,8 @@ endif()
 #
 add_compile_options(-Wall -O0 -g -std=c++14 -rdynamic)
 add_definitions(-D _DEBUG)
-include_directories(inc/dbus)
-aux_source_directory(src/dbus SRCS)
+include_directories(inc)
+aux_source_directory(src SRCS)
 add_library(${PROJECT_NAME} STATIC ${SRCS})
 target_link_libraries(${PROJECT_NAME} pthread dbus-1)
 

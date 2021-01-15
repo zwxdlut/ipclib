@@ -96,7 +96,7 @@ namespace ipc
 		
 		if (nullptr == msg)
 		{ 
-			LOGE(TAG, "message is null!");
+			LOGE(TAG, "The message is null!");
 		}
 
 		return msg;
@@ -108,7 +108,7 @@ namespace ipc
 
 		if(nullptr == _msg)
 		{
-			LOGE(TAG, "message is null!");
+			LOGE(TAG, "The message is null!");
 			return nullptr;
 		}
 
@@ -127,7 +127,7 @@ namespace ipc
 	{
 		if(nullptr == conn_)
 		{
-			LOGE(TAG, "connection is null!");
+			LOGE(TAG, "The connection is null!");
 			return nullptr;
 		}
 
@@ -154,13 +154,13 @@ namespace ipc
 		
 		if(nullptr == conn_)
 		{
-			LOGE(TAG, "connection is null!");
+			LOGE(TAG, "The connection is null!");
 			return -1;
 		}
 
 		if(nullptr == _msg)
 		{
-			LOGE(TAG, "message is null!");
+			LOGE(TAG, "The message is null!");
 			return -1;
 		}
 
@@ -184,13 +184,13 @@ namespace ipc
 
 		if(nullptr == conn_)
 		{
-			LOGE(TAG, "connection is null!");
+			LOGE(TAG, "The connection is null!");
 			return -1;
 		}
 
 		if(nullptr == _msg)
 		{
-			LOGE(TAG, "message is null!");
+			LOGE(TAG, "The message is null!");
 			return -1;
 		}
 
@@ -205,7 +205,7 @@ namespace ipc
 
 		if (nullptr == pending) 
 		{ 
-			LOGE(TAG, "pending call is null!"); 
+			LOGE(TAG, "The pending call is null!"); 
 			return -1; 
 		}
 
@@ -219,7 +219,7 @@ namespace ipc
 		
 		if (nullptr == _msg) 
 		{
-			LOGE(TAG, "reply is null!"); 
+			LOGE(TAG, "The reply is null!"); 
 			return -1; 
 		}
 
@@ -237,7 +237,7 @@ namespace ipc
 
 		if(nullptr == conn_)
 		{
-			LOGE(TAG, "connection is null!");
+			LOGE(TAG, "The connection is null!");
 			return -1;
 		}
 		
@@ -264,7 +264,7 @@ namespace ipc
 		
 		if(nullptr == conn_)
 		{
-			LOGE(TAG, "connection is null!");
+			LOGE(TAG, "The connection is null!");
 			return -1;
 		}
 		
@@ -289,7 +289,7 @@ namespace ipc
 	{
 		if (nullptr == _msg) 
 		{
-			LOGE(TAG, "message is null!");
+			LOGE(TAG, "The message is null!");
 			return false;
 		}
 
@@ -300,7 +300,7 @@ namespace ipc
 	{
 		if (nullptr == _msg) 
 		{
-			LOGE(TAG, "message is null!");
+			LOGE(TAG, "The message is null!");
 			return false;
 		}
 
@@ -311,7 +311,7 @@ namespace ipc
 	{
 		if (nullptr == _msg) 
 		{
-			LOGE(TAG, "message is null!");
+			LOGE(TAG, "The message is null!");
 			return false;
 		}
 		

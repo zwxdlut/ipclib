@@ -14,7 +14,7 @@
 #include <type_traits>
 
 #include "dbus_helper.h"
-#include "../func_traits.h"
+#include "func_traits.h"
 
 namespace ipc
 {
@@ -100,7 +100,7 @@ namespace ipc
         {
             if (nullptr == _msg)
             {
-                LOGE(TAG, "message is null!");
+                LOGE(TAG, "The Message is null!");
                 return -1;
             }
 
@@ -123,7 +123,7 @@ namespace ipc
         {
             if (nullptr == _msg)
             {
-                LOGE(TAG, "message is null!");
+                LOGE(TAG, "The Message is null!");
                 return -1;
             }
 
