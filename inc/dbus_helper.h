@@ -96,7 +96,7 @@ namespace ipc
 
 			if(!dbus_message_iter_init(_msg, &iter))
 			{
-				LOGE(TAG, "initialize message iterator failed!");
+				LOGE(TAG, "initialize the message iterator failed!");
 				return -1;
 			}
 

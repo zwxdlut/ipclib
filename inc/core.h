@@ -100,17 +100,15 @@ namespace ipc
         {
             if (nullptr == _msg)
             {
-                LOGE(TAG, "The Message is null!");
+                LOGE(TAG, "The message is null!");
                 return -1;
             }
 
             if (dbus_.has_path(_msg, _key.path_) && is_match(_msg, _key.iface_, _key.member_))
             {
                 LOGI(TAG, "path = %s, iface = %s, member = %s", _key.path_.c_str(), _key.iface_.c_str(), _key.member_.c_str());
-
                 using args_type = typename ipc::func_traits<FUNC>::args_type;
                 args_type args;
-
                 return receive(_key, _func, _msg, args, std::make_index_sequence<std::tuple_size<args_type>::value>{});
 
             }
@@ -123,7 +121,7 @@ namespace ipc
         {
             if (nullptr == _msg)
             {
-                LOGE(TAG, "The Message is null!");
+                LOGE(TAG, "The message is null!");
                 return -1;
             }
 
