@@ -1,4 +1,4 @@
-#!/bin/bash
+# !/bin/sh
 
 # setup build environment
 function setup_env()
