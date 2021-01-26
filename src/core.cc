@@ -104,8 +104,10 @@ namespace ipc
 
                 dbus_.free(msg);
             }
-        
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            else
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            }
         }
 
         std::lock_guard<std::mutex> lock(listen_mutex_);

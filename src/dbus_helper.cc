@@ -56,6 +56,8 @@ namespace ipc
 
 	int dbus_helper::disconnect()
 	{
+		LOGD(TAG, "");
+
 		if(nullptr != conn_)
 		{
 			dbus_connection_unref(conn_);
@@ -104,13 +106,13 @@ namespace ipc
 
 	DBusMessage* dbus_helper::create_reply(DBusMessage *_msg)
 	{
-		LOGD(TAG, "");
-
 		if(nullptr == _msg)
 		{
 			LOGE(TAG, "The message is null!");
 			return nullptr;
 		}
+
+		LOGD(TAG, "");
 
 		// Create a reply from the message
 		DBusMessage *reply = dbus_message_new_method_return(_msg);
@@ -133,7 +135,7 @@ namespace ipc
 
 		// Non-blocking read of the next available message
 		dbus_connection_read_write(conn_, 0);
-		
+
 		return dbus_connection_pop_message(conn_);
 	}
 
@@ -149,9 +151,7 @@ namespace ipc
 	}
 
 	int dbus_helper::send(DBusMessage *_msg)
-	{
-		LOGD(TAG, "+"); 
-		
+	{	
 		if(nullptr == conn_)
 		{
 			LOGE(TAG, "The connection is null!");
@@ -163,6 +163,8 @@ namespace ipc
 			LOGE(TAG, "The message is null!");
 			return -1;
 		}
+
+		LOGD(TAG, "+");
 
 		// Send the message and flush the connection
 		if (!dbus_connection_send(conn_, _msg, 0)) 
@@ -180,8 +182,6 @@ namespace ipc
 
 	int dbus_helper::send_with_reply(DBusMessage *&_msg)
 	{
-		LOGD(TAG, "");
-
 		if(nullptr == conn_)
 		{
 			LOGE(TAG, "The connection is null!");
@@ -193,6 +193,8 @@ namespace ipc
 			LOGE(TAG, "The message is null!");
 			return -1;
 		}
+
+	    LOGD(TAG, "+");
 
 		DBusPendingCall *pending = nullptr;
 
@@ -233,14 +235,14 @@ namespace ipc
 
 	int dbus_helper::add_match(const std::string &_rule)
 	{
-		LOGD(TAG, "rule = %s", _rule.c_str());
-
 		if(nullptr == conn_)
 		{
 			LOGE(TAG, "The connection is null!");
 			return -1;
 		}
-		
+
+		LOGD(TAG, "rule = %s", _rule.c_str());
+
 		DBusError err;
 		
 		// initialize the error
@@ -259,14 +261,14 @@ namespace ipc
 	}
 
 	int dbus_helper::remove_match(const std::string &_rule)
-	{
-		LOGD(TAG, "rule = %s", _rule.c_str());
-		
+	{	
 		if(nullptr == conn_)
 		{
 			LOGE(TAG, "The connection is null!");
 			return -1;
 		}
+
+		LOGD(TAG, "rule = %s", _rule.c_str());
 		
 		DBusError err;
 		

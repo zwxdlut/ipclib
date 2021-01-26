@@ -62,13 +62,13 @@ namespace ipc
 		template <typename... ARGS>
 		int pack_args(DBusMessage *_msg, const ARGS&... _args)
 		{
-			LOGD(TAG, "+");
-
 			if (nullptr == _msg)
 			{
 				LOGE(TAG, "The message is null!");
 				return -1;
 			}
+
+			LOGD(TAG, "+");
 
 			DBusMessageIter iter;
 
@@ -84,13 +84,13 @@ namespace ipc
 		template <typename... ARGS>
 		int unpack_args(DBusMessage *_msg, ARGS&... _args)
 		{
-			LOGD(TAG, "+");
-
 			if (nullptr == _msg)
 			{
 				LOGE(TAG, "The message is null!");
 				return -1;
 			}
+
+			LOGD(TAG, "+");
 
 			DBusMessageIter iter;
 
@@ -110,13 +110,13 @@ namespace ipc
 		template <typename T>
 		int arg_in(DBusMessageIter &_iter, const T &_t)
 		{
-			LOGD(TAG, "type = %s", typeid(T).name());
-
 			if(!std::is_base_of<serializable, T>::value)
 			{
 				LOGE(TAG, "Type %s is not serialized!", typeid(T).name());
 				return -1;
 			}
+
+			LOGD(TAG, "type = %s", typeid(T).name());
 
 			DBusMessageIter subIter;
 
@@ -236,14 +236,14 @@ namespace ipc
 		template <typename T>
 		int arg_out(DBusMessageIter &_iter, T &_t)
 		{
-			LOGD(TAG, "type = %s", typeid(T).name());
-
 			if (!std::is_base_of<serializable, T>::value)
 			{
 				// TODO: static_cast from T to serializable will be failed during template deduction
 				LOGE(TAG, "Type %s is not serialized!", typeid(T).name());
 				return -1;
-			}		
+			}
+
+			LOGD(TAG, "type = %s", typeid(T).name());	
 			
 			int type = dbus_message_iter_get_arg_type(&_iter);
 
