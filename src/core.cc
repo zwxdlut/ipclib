@@ -21,7 +21,8 @@ namespace ipc
         return 0;
     }
 
-    int core::disconnect(){
+    int core::disconnect()
+    {
         stop();
         binds_.clear();
         conn_.clear();

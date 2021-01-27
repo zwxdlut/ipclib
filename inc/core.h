@@ -109,7 +109,7 @@ namespace ipc
                 LOGI(TAG, "path = %s, iface = %s, member = %s", _key.path_.c_str(), _key.iface_.c_str(), _key.member_.c_str());
                 using args_type = typename ipc::func_traits<FUNC>::args_type;
                 args_type args;
-                return receive(_key, _func, _msg, args, std::make_index_sequence<std::tuple_size<args_type>::value>{});
+                return receive(_key, _func, _msg, args, std::make_index_sequence<std::tuple_size<args_type>::value> {});
             }
 
             return 0;

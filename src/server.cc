@@ -7,7 +7,7 @@ namespace ipc
         TAG = "ipc::server";
     }
 
-    server::~server(){}
+    server::~server() {}
 
     int server::connect(const std::string &_conn)
     {
