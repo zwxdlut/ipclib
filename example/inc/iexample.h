@@ -16,9 +16,15 @@ public:
     };
 
 public:
-    iexample() {}
+    iexample()
+    {
 
-    virtual ~iexample() {}
+    }
+
+    virtual ~iexample()
+    {
+        
+    }
 
     virtual void func1(const int32_t _i32, const bool _b, const data_a &_a, std::vector<data_a> &_as) = 0;
 

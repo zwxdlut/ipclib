@@ -15,12 +15,12 @@ namespace ipc
     #define COLOR_DEBUG   "36;40;1m"
     #define COLOR_TRACE   "37;40;1m"
 
-    #define LOGI(TAG, format, ...) do{printf(ESC_START COLOR_INFO "%s(%d)[%s::%s]: " format"\n" ESC_END, __FILE__, __LINE__, TAG, __FUNCTION__, ##__VA_ARGS__);}while(0)
-    #define LOGW(TAG, format, ...) do{printf(ESC_START COLOR_WARN "%s(%d)[%s::%s]: " format"\n" ESC_END, __FILE__, __LINE__, TAG, __FUNCTION__, ##__VA_ARGS__);}while(0)
-    #define LOGE(TAG, format, ...) do{printf(ESC_START COLOR_ERROR "%s(%d)[%s::%s]: " format"\n" ESC_END, __FILE__, __LINE__, TAG, __FUNCTION__, ##__VA_ARGS__);}while(0)
+    #define LOGI(TAG, format, ...) do {printf(ESC_START COLOR_INFO "%s(%d)[%s::%s]: " format"\n" ESC_END, __FILE__, __LINE__, TAG, __FUNCTION__, ##__VA_ARGS__);} while (0)
+    #define LOGW(TAG, format, ...) do {printf(ESC_START COLOR_WARN "%s(%d)[%s::%s]: " format"\n" ESC_END, __FILE__, __LINE__, TAG, __FUNCTION__, ##__VA_ARGS__);} while (0)
+    #define LOGE(TAG, format, ...) do {printf(ESC_START COLOR_ERROR "%s(%d)[%s::%s]: " format"\n" ESC_END, __FILE__, __LINE__, TAG, __FUNCTION__, ##__VA_ARGS__);} while (0)
 
-    #if defined(_DEBUG)
-        #define LOGD(TAG, format, ...) do{printf(ESC_START COLOR_DEBUG "%s(%d)[%s::%s]: " format"\n" ESC_END, __FILE__, __LINE__, TAG, __FUNCTION__, ##__VA_ARGS__);}while(0)
+    #if defined (_DEBUG)
+        #define LOGD(TAG, format, ...) do {printf(ESC_START COLOR_DEBUG "%s(%d)[%s::%s]: " format"\n" ESC_END, __FILE__, __LINE__, TAG, __FUNCTION__, ##__VA_ARGS__);}while (0)
     #else 
         #define LOGD(TAG, format, ...)
     #endif

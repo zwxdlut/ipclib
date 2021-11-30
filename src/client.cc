@@ -7,12 +7,16 @@ namespace ipc
         TAG = "ipc::client"; 
     }
 
-    client::~client() {}
+    client::~client()
+    {
+
+    }
 
     int client::connect(const std::string &_conn)
     {
         core::connect(_conn);
         LOGI(TAG, "conn = %s", _conn.c_str());
+        
         return dbus_.connect("");
     }
 

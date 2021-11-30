@@ -22,6 +22,7 @@ namespace ipc
 
 		// initialize the errors
 		dbus_error_init(&err);
+
 		// connect to the system bus and check for errors
 		conn_ = dbus_bus_get(DBUS_BUS_SESSION, &err);
 
@@ -31,11 +32,13 @@ namespace ipc
 			dbus_error_free(&err);
 		}
 		
-		if (nullptr == conn_) { 
+		if (nullptr == conn_) 
+		{ 
 			return -1;
 		}
 
-		if(!_name.empty()){
+		if (!_name.empty())
+		{
 			// request our connection on the bus
 			int ret = dbus_bus_request_name(conn_, _name.c_str(), DBUS_NAME_FLAG_REPLACE_EXISTING , &err);
 
@@ -58,7 +61,7 @@ namespace ipc
 	{
 		LOGD(TAG, "");
 
-		if(nullptr != conn_)
+		if (nullptr != conn_)
 		{
 			dbus_connection_unref(conn_);
 			conn_ = nullptr;
@@ -71,7 +74,7 @@ namespace ipc
 	{
 		LOGD(TAG, "conn = %s, path = %s, iface = %s, method = %s", _conn.c_str(), _path.c_str(), _iface.c_str(), _method.c_str());
 		
-		// Create a new method call and check for errors
+		// create a new method call and check for errors
 		DBusMessage *msg = dbus_message_new_method_call(
 			_conn.c_str(),    // target for the method call
 			_path.c_str(),    // object to call on
@@ -90,7 +93,7 @@ namespace ipc
 	{
 		LOGD(TAG, "path = %s, iface = %s, signal = %s", _path.c_str(), _iface.c_str(), _signal.c_str());
 		
-		// Create a signal and check for errors
+		// create a signal and check for errors
 		DBusMessage* msg = dbus_message_new_signal(
 			_path.c_str(),    // object name of the signal
 			_iface.c_str(),   // interface name of the signal
@@ -98,7 +101,7 @@ namespace ipc
 		
 		if (nullptr == msg)
 		{ 
-			LOGE(TAG, "The message is null!");
+			LOGE(TAG, "Message is null!");
 		}
 
 		return msg;
@@ -106,15 +109,15 @@ namespace ipc
 
 	DBusMessage* dbus_helper::create_reply(DBusMessage *_msg)
 	{
-		if(nullptr == _msg)
+		if (nullptr == _msg)
 		{
-			LOGE(TAG, "The message is null!");
+			LOGE(TAG, "Message is null!");
 			return nullptr;
 		}
 
 		LOGD(TAG, "");
 
-		// Create a reply from the message
+		// create a reply from the message
 		DBusMessage *reply = dbus_message_new_method_return(_msg);
 
 		if (nullptr == reply) 
@@ -127,13 +130,13 @@ namespace ipc
 
 	DBusMessage* dbus_helper::pop()
 	{
-		if(nullptr == conn_)
+		if (nullptr == conn_)
 		{
-			LOGE(TAG, "The connection is null!");
+			LOGE(TAG, "Connection is null!");
 			return nullptr;
 		}
 
-		// Non-blocking read of the next available message
+		// non-blocking read of the next available message
 		dbus_connection_read_write(conn_, 0);
 
 		return dbus_connection_pop_message(conn_);
@@ -141,9 +144,9 @@ namespace ipc
 
 	int dbus_helper::free(DBusMessage *_msg)
 	{
-		if(nullptr != _msg)
+		if (nullptr != _msg)
 		{
-			// Free the message
+			// free the message
 			dbus_message_unref(_msg);		
 		}
 
@@ -152,21 +155,21 @@ namespace ipc
 
 	int dbus_helper::send(DBusMessage *_msg)
 	{	
-		if(nullptr == conn_)
+		if (nullptr == conn_)
 		{
-			LOGE(TAG, "The connection is null!");
+			LOGE(TAG, "Connection is null!");
 			return -1;
 		}
 
-		if(nullptr == _msg)
+		if (nullptr == _msg)
 		{
-			LOGE(TAG, "The message is null!");
+			LOGE(TAG, "Message is null!");
 			return -1;
 		}
 
 		LOGD(TAG, "+");
 
-		// Send the message and flush the connection
+		// send the message and flush the connection
 		if (!dbus_connection_send(conn_, _msg, 0)) 
 		{
 			LOGE(TAG, "out of memory!"); 
@@ -182,15 +185,15 @@ namespace ipc
 
 	int dbus_helper::send_with_reply(DBusMessage *&_msg)
 	{
-		if(nullptr == conn_)
+		if (nullptr == conn_)
 		{
-			LOGE(TAG, "The connection is null!");
+			LOGE(TAG, "Connection is null!");
 			return -1;
 		}
 
-		if(nullptr == _msg)
+		if (nullptr == _msg)
 		{
-			LOGE(TAG, "The message is null!");
+			LOGE(TAG, "Message is null!");
 			return -1;
 		}
 
@@ -198,7 +201,7 @@ namespace ipc
 
 		DBusPendingCall *pending = nullptr;
 
-		// Send message and get a handle for a reply, -1 is default timeout
+		// send message and get a handle for a reply, -1 is default timeout
 		if (!dbus_connection_send_with_reply(conn_, _msg, &pending, -1))
 		{ 
 			LOGE(TAG, "out of memory!");  
@@ -207,21 +210,24 @@ namespace ipc
 
 		if (nullptr == pending) 
 		{ 
-			LOGE(TAG, "The pending call is null!"); 
+			LOGE(TAG, "Pending call is null!"); 
 			return -1; 
 		}
 
 		dbus_connection_flush(conn_);
+
 		// free message
 		dbus_message_unref(_msg);
+
 		// block until we recieve a reply
 		dbus_pending_call_block(pending);
+
 		// get the reply message
 		_msg = dbus_pending_call_steal_reply(pending);
 		
 		if (nullptr == _msg) 
 		{
-			LOGE(TAG, "The reply is null!"); 
+			LOGE(TAG, "Reply is null!"); 
 			return -1; 
 		}
 
@@ -235,9 +241,9 @@ namespace ipc
 
 	int dbus_helper::add_match(const std::string &_rule)
 	{
-		if(nullptr == conn_)
+		if (nullptr == conn_)
 		{
-			LOGE(TAG, "The connection is null!");
+			LOGE(TAG, "Connection is null!");
 			return -1;
 		}
 
@@ -247,8 +253,10 @@ namespace ipc
 		
 		// initialize the error
 		dbus_error_init(&err);
+
 		// add a rule for which messages we want to see
 		dbus_bus_add_match(conn_, _rule.c_str(), &err);
+
 		dbus_connection_flush(conn_);
 
 		if (dbus_error_is_set(&err))
@@ -262,9 +270,9 @@ namespace ipc
 
 	int dbus_helper::remove_match(const std::string &_rule)
 	{	
-		if(nullptr == conn_)
+		if (nullptr == conn_)
 		{
-			LOGE(TAG, "The connection is null!");
+			LOGE(TAG, "Connection is null!");
 			return -1;
 		}
 
@@ -274,8 +282,10 @@ namespace ipc
 		
 		// initialize the error
 		dbus_error_init(&err);
+
 		// remove a rule from which messages we want to see
 		dbus_bus_remove_match(conn_, _rule.c_str(), &err);
+
 		dbus_connection_flush(conn_);
 
 		if (dbus_error_is_set(&err))
@@ -291,7 +301,7 @@ namespace ipc
 	{
 		if (nullptr == _msg) 
 		{
-			LOGE(TAG, "The message is null!");
+			LOGE(TAG, "Message is null!");
 			return false;
 		}
 
@@ -302,7 +312,7 @@ namespace ipc
 	{
 		if (nullptr == _msg) 
 		{
-			LOGE(TAG, "The message is null!");
+			LOGE(TAG, "Message is null!");
 			return false;
 		}
 
@@ -313,7 +323,7 @@ namespace ipc
 	{
 		if (nullptr == _msg) 
 		{
-			LOGE(TAG, "The message is null!");
+			LOGE(TAG, "Message is null!");
 			return false;
 		}
 		

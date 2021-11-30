@@ -39,7 +39,7 @@ namespace ipc
             dbus_message msg = nullptr;   
             std::lock_guard<std::mutex> lock(send_mutex_);
 
-            if(0 == (msg = dbus_.create_method_call(conn_, _path, _iface, _member))
+            if (nullptr == (msg = dbus_.create_method_call(conn_, _path, _iface, _member))
                 || 0 != dbus_.pack_args(msg, _args...) 
                 || (_has_out ? (0 != dbus_.send_with_reply(msg) || 0 != dbus_.unpack_args(msg, _args...)) : (0 != dbus_.send(msg))))
             {
@@ -47,7 +47,9 @@ namespace ipc
             }
         
             dbus_.free(msg);
-            LOGI(TAG, "path = %s, iface = %s, method = %s(%s) %s", _path.c_str(), _iface.c_str(), _member.c_str(), 
+            
+            LOGI(TAG, "path = %s, iface = %s, method = %s(%s) %s", 
+                _path.c_str(), _iface.c_str(), _member.c_str(), 
                 (_has_out ? "with replay" : "without replay"), 0 == ret ? "successful!" : "failed!");
 
             return ret;

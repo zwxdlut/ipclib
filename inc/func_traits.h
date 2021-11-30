@@ -112,7 +112,7 @@ namespace ipc
             return false;
         }
 
-        constexpr static const bool has_in_  = check<tags::in_arg, ARGS...>();
+        constexpr static const bool has_in_ = check<tags::in_arg, ARGS...>();
         constexpr static const bool has_out_ = check<tags::out_arg, ARGS...>();
     };
 

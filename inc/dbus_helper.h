@@ -64,7 +64,7 @@ namespace ipc
 		{
 			if (nullptr == _msg)
 			{
-				LOGE(TAG, "The message is null!");
+				LOGE(TAG, "Message is null!");
 				return -1;
 			}
 
@@ -86,7 +86,7 @@ namespace ipc
 		{
 			if (nullptr == _msg)
 			{
-				LOGE(TAG, "The message is null!");
+				LOGE(TAG, "Message is null!");
 				return -1;
 			}
 
@@ -94,7 +94,7 @@ namespace ipc
 
 			DBusMessageIter iter;
 
-			if(!dbus_message_iter_init(_msg, &iter))
+			if (!dbus_message_iter_init(_msg, &iter))
 			{
 				LOGE(TAG, "initialize the message iterator failed!");
 				return -1;
@@ -110,7 +110,7 @@ namespace ipc
 		template <typename T>
 		int arg_in(DBusMessageIter &_iter, const T &_t)
 		{
-			if(!std::is_base_of<serializable, T>::value)
+			if (!std::is_base_of<serializable, T>::value)
 			{
 				LOGE(TAG, "Type %s is not serialized!", typeid(T).name());
 				return -1;
@@ -216,10 +216,10 @@ namespace ipc
 
 			for (auto &t : _vt)
 			{
-				if(0 != arg_in(subIter, t))
+				if (0 != arg_in(subIter, t))
 				{
 					LOGE(TAG, "append failed!");
-					dbus_message_iter_abandon_container (&_iter, &subIter);
+					dbus_message_iter_abandon_container(&_iter, &subIter);
 					return -1;
 				}		
 			}
@@ -247,7 +247,7 @@ namespace ipc
 			
 			int type = dbus_message_iter_get_arg_type(&_iter);
 
-			if(DBUS_TYPE_STRUCT != type)
+			if (DBUS_TYPE_STRUCT != type)
 			{
 				LOGE(TAG, "Argument type %d is not DBUS_TYPE_STRUCT!", type);
 				return -1;	
@@ -264,9 +264,9 @@ namespace ipc
 				return -1;
 			}
 			
-			if(!dbus_message_iter_next(&_iter))
+			if (!dbus_message_iter_next(&_iter))
 			{
-				LOGE(TAG, "The iterator reaches the end!");
+				LOGE(TAG, "Iterator reaches the end!");
 				return -1;
 			}
 
@@ -280,7 +280,7 @@ namespace ipc
 
 			int type = dbus_message_iter_get_arg_type(&_iter);
 
-			if(DBUS_TYPE_ARRAY != type)
+			if (DBUS_TYPE_ARRAY != type)
 			{
 				LOGE(TAG, "Argument type %d is not DBUS_TYPE_ARRAY!", type);
 				return -1;	
@@ -291,23 +291,23 @@ namespace ipc
 
 			dbus_message_iter_recurse(&_iter, &subIter);
 
-			while(0 == ret)
+			while (0 == ret)
 			{
 				T t;
 				ret = arg_out(subIter, t);
 				_vt.push_back(t);
 			}
 
-			if(!dbus_message_iter_next(&_iter))
+			if (!dbus_message_iter_next(&_iter))
 			{
-				LOGD(TAG, "The iterator reaches the end!");
+				LOGD(TAG, "Iterator reaches the end!");
 			}
 
 			return 0;
 		}
 
 	private:
-		const char     *TAG = "ipc::dbus_helper";
+		const char *TAG = "ipc::dbus_helper";
 		DBusConnection *conn_;
 	};
 
@@ -319,7 +319,7 @@ namespace ipc
 	{
 		if (nullptr == _msg)
 		{
-			LOGE(TAG, "The message is null!");
+			LOGE(TAG, "Message is null!");
 			return -1;
 		}
 
@@ -331,7 +331,7 @@ namespace ipc
 	{
 		if (nullptr == _msg)
 		{
-			LOGE(TAG, "The message is null!");
+			LOGE(TAG, "Message is null!");
 			return -1;
 		}
 
@@ -473,7 +473,7 @@ namespace ipc
 	{
 		int type = dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_BYTE != type)
+		if (DBUS_TYPE_BYTE != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_BYTE!", type);
 			return -1;	
@@ -482,9 +482,9 @@ namespace ipc
 		dbus_message_iter_get_basic(&_iter, &_t);
 		LOGD(TAG, "argument type = %d, value = %d", type, _t);
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}		
 		
@@ -502,7 +502,7 @@ namespace ipc
 	{
 		int type = dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_INT16 != type)
+		if (DBUS_TYPE_INT16 != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_INT16!", type);
 			return -1;	
@@ -511,9 +511,9 @@ namespace ipc
 		dbus_message_iter_get_basic(&_iter, &_t);
 		LOGD(TAG, "argument type = %d, value = %d", type, _t);
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}		
 		
@@ -525,7 +525,7 @@ namespace ipc
 	{
 		int type = dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_UINT16 != type)
+		if (DBUS_TYPE_UINT16 != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_UINT16!", type);
 			return -1;	
@@ -534,9 +534,9 @@ namespace ipc
 		dbus_message_iter_get_basic(&_iter, &_t);
 		LOGD(TAG, "argument type = %d, value = %d", type, _t);
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}
 
@@ -548,7 +548,7 @@ namespace ipc
 	{
 		int type = dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_INT32 != type)
+		if (DBUS_TYPE_INT32 != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_INT32!", type);
 			return -1;	
@@ -557,9 +557,9 @@ namespace ipc
 		dbus_message_iter_get_basic(&_iter, &_t);
 		LOGD(TAG, "argument type = %d, value = %d", type, _t);
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}
 
@@ -571,7 +571,7 @@ namespace ipc
 	{
 		int type = dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_UINT32 != type)
+		if (DBUS_TYPE_UINT32 != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_UINT32!", type);
 			return -1;	
@@ -580,9 +580,9 @@ namespace ipc
 		dbus_message_iter_get_basic(&_iter, &_t);
 		LOGD(TAG, "argument type = %d, value = %d", type, _t);
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}
 
@@ -594,7 +594,7 @@ namespace ipc
 	{
 		int type = dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_INT64 != type)
+		if (DBUS_TYPE_INT64 != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_INT64!", type);
 			return -1;	
@@ -603,9 +603,9 @@ namespace ipc
 		dbus_message_iter_get_basic(&_iter, &_t);
 		LOGD(TAG, "argument type = %d, value = %" PRId64"", type, _t);
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}
 
@@ -617,7 +617,7 @@ namespace ipc
 	{
 		int type =dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_UINT64 != type)
+		if (DBUS_TYPE_UINT64 != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_UINT64!", type);
 			return -1;	
@@ -626,9 +626,9 @@ namespace ipc
 		dbus_message_iter_get_basic(&_iter, &_t);
 		LOGD(TAG, "argument type = %d, value = %" PRIu64"", type, _t);
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}
 
@@ -640,7 +640,7 @@ namespace ipc
 	{
 		int type = dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_DOUBLE != type)
+		if (DBUS_TYPE_DOUBLE != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_DOUBLE!", type);
 			return -1;	
@@ -650,9 +650,9 @@ namespace ipc
 		dbus_message_iter_get_basic(&_iter, &_t);
 		LOGD(TAG, "argument type = %d, value = %lf", type, _t);
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}
 
@@ -664,7 +664,7 @@ namespace ipc
 	{
 		int type = dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_BOOLEAN != type)
+		if (DBUS_TYPE_BOOLEAN != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_BOOLEAN!", type);
 			return -1;
@@ -676,9 +676,9 @@ namespace ipc
 		_t = t;
 		LOGD(TAG, "argument type = %d, value = %d", type, _t);
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}
 			
@@ -690,7 +690,7 @@ namespace ipc
 	{
 		int type = dbus_message_iter_get_arg_type(&_iter);
 
-		if(DBUS_TYPE_STRING != type)
+		if (DBUS_TYPE_STRING != type)
 		{
 			LOGE(TAG, "Argument type %d is not DBUS_TYPE_STRING!", type);
 			return -1;	
@@ -702,9 +702,9 @@ namespace ipc
 		_t = std::string(str);
 		LOGD(TAG, "argument type = %d, value = %s", type, _t.c_str());
 
-		if(!dbus_message_iter_next(&_iter))
+		if (!dbus_message_iter_next(&_iter))
 		{
-			LOGD(TAG, "The iterator reaches the end!");
+			LOGD(TAG, "Iterator reaches the end!");
 			return -1;
 		}
 			

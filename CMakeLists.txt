@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(ipc)
 
 #
-# Platform
+# platform
 #
 message(STATUS "PLATFORM = $ENV{PLATFORM}")
 
@@ -14,7 +14,7 @@ else()
 endif()
 
 #
-# Ipc lib
+# ipc lib
 #
 add_compile_options(-Wall -O0 -g -std=c++14 -rdynamic)
 add_definitions(-D _DEBUG)
@@ -23,6 +23,8 @@ aux_source_directory(src SRCS)
 add_library(${PROJECT_NAME} STATIC ${SRCS})
 target_link_libraries(${PROJECT_NAME} pthread dbus-1)
 
-# Example
+#
+# example
+#
 add_subdirectory(example)
 

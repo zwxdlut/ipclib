@@ -18,6 +18,7 @@ namespace ipc
     int core::connect(const std::string &_conn)
     {
         conn_ = _conn;
+
         return 0;
     }
 
@@ -26,6 +27,7 @@ namespace ipc
         stop();
         binds_.clear();
         conn_.clear();
+
         return dbus_.disconnect();
     }
 
@@ -39,7 +41,7 @@ namespace ipc
     {
         done_ = false;
 
-        if(_sync)
+        if (_sync)
         {
             listen();
         }
@@ -74,13 +76,13 @@ namespace ipc
     {
         LOGI(TAG, "+");
 
-        while(!done_)
+        while (!done_)
         {
             DBusMessage *msg = dbus_.pop();
 
-            if(nullptr != msg)
+            if (nullptr != msg)
             {           
-                // Debug
+                // debug
                 // const char *type = dbus_message_type_to_string(dbus_message_get_type(msg));
                 // const char *sender = dbus_message_get_sender(msg);
                 // const char *dest = dbus_message_get_destination(msg);
@@ -128,7 +130,7 @@ namespace ipc
         {
             return ipc->invoke(_path, _iface, _member, _args...);
         } 
-        else if(server *ipc = dynamic_cast<server*>(this))
+        else if (server *ipc = dynamic_cast<server*>(this))
         {
             return ipc->invoke(_path, _iface, _member, _args...);
         }

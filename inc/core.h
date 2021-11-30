@@ -63,8 +63,8 @@ namespace ipc
 
         int disconnect();
 
-        /* If input argument of FUNC is 'const', it must be also decorated reference(&), 
-           because substitution for FUNC argument will remove 'const'. */
+        // If input argument of FUNC is 'const', it must be also decorated reference(&), 
+        // because substitution for FUNC argument will remove 'const'.
         template <typename FUNC>
         void bind(const std::string &_path, const std::string &_iface, const std::string &_member, FUNC _func)
         {
@@ -100,7 +100,7 @@ namespace ipc
         {
             if (nullptr == _msg)
             {
-                LOGE(TAG, "The message is null!");
+                LOGE(TAG, "Message is null!");
                 return -1;
             }
 
@@ -120,7 +120,7 @@ namespace ipc
         {
             if (nullptr == _msg)
             {
-                LOGE(TAG, "The message is null!");
+                LOGE(TAG, "Message is null!");
                 return -1;
             }
 
@@ -136,7 +136,7 @@ namespace ipc
                     {
                         dbus_message reply_msg = dbus_.create_reply(_msg);
 
-                        if (0 == reply_msg || 0 != dbus_.pack_args(reply_msg, std::get<N>(_args)...) ||
+                        if (nullptr == reply_msg || 0 != dbus_.pack_args(reply_msg, std::get<N>(_args)...) ||
                             0 != dbus_.send(reply_msg))
                         {
                             LOGE(TAG, "replay failed!");
@@ -159,17 +159,17 @@ namespace ipc
         }
 
     protected: 
-        const char                     *TAG = "ipc::core";
-        bool                           done_;
-        bool                           listen_thread_exit_;
-        std::string                    conn_;
-        dbus_helper                    dbus_;
+        const char *TAG = "ipc::core";
+        bool done_;
+        bool listen_thread_exit_;
+        std::string conn_;
+        dbus_helper dbus_;
         std::map<key_t, bind_function> binds_;
-        std::thread                    *listen_thread_;
-        std::mutex                     listen_mutex_;
-        std::condition_variable        listen_cond_;
-        std::mutex                     send_mutex_;
-        std::mutex                     binds_mutex_;
+        std::thread *listen_thread_;
+        std::mutex listen_mutex_;
+        std::condition_variable listen_cond_;
+        std::mutex send_mutex_;
+        std::mutex binds_mutex_;
     };
 } // namespace ipc
 

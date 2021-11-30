@@ -13,9 +13,15 @@
 
 struct data_b : public ipc::dbus_helper::serializable
 {
-    data_b() {}
+    data_b()
+    {
 
-    data_b(const uint8_t _i8, const uint32_t _i32): i8_(_i8), i32_(_i32) {}
+    }
+
+    data_b(const uint8_t _i8, const uint32_t _i32): i8_(_i8), i32_(_i32)
+    {
+
+    }
 
     void signature(std::string &_sig)
     {
@@ -45,10 +51,16 @@ struct data_b : public ipc::dbus_helper::serializable
 
 struct data_a : public ipc::dbus_helper::serializable
 {
-    data_a() {}
+    data_a()
+    {
 
-    data_a(const int32_t _i32, const std::vector<std::string> &_strs, const bool _b1, const bool _b2, const data_b &_b):
-        i32_(_i32), strs_(_strs), b1_(_b1), b2_(_b2), b_(_b){}
+    }
+
+    data_a(const int32_t _i32, const std::vector<std::string> &_strs, const bool _b1, const bool _b2, const data_b &_b): 
+        i32_(_i32), strs_(_strs), b1_(_b1), b2_(_b2), b_(_b)
+    {
+
+    }
 
     void signature(std::string &_sig)
     {
@@ -88,7 +100,10 @@ class formater
 {
 public:
     template <typename T>
-    static std::unique_ptr<std::string> format(const T &_t) { return nullptr; }
+    static std::unique_ptr<std::string> format(const T &_t)
+    { 
+        return nullptr;
+    }
 
     template <typename T>
     static std::unique_ptr<std::string> format(const std::vector<T> &_vt)
@@ -111,6 +126,7 @@ inline std::unique_ptr<std::string> formater::format(const data_b &_t)
 {
     std::stringstream ss;
     ss << "{" << _t.i8_ << ", " << _t.i32_ << "}";
+
     return std::make_unique<std::string>(ss.str());
 }
 
@@ -120,7 +136,7 @@ inline std::unique_ptr<std::string> formater::format(const data_a &_t)
     std::stringstream ss;
 
     ss << "{" << _t.i32_ << ", [";
-    for(auto &s : _t.strs_)
+    for (auto &s : _t.strs_)
     {
         ss << s << " ";
     }
